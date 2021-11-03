@@ -26,7 +26,7 @@ final class GildedRose
 
             $item->sell_in -= 1;
 
-            if ('Aged Brie' == $item->name && 'Backstage passes to a TAFKAL80ETC concert' == $item->name) {
+            if ('Aged Brie' == $item->name) {
                 $item->quality += 1;
             } elseif ('Backstage passes to a TAFKAL80ETC concert' == $item->name) {
                 $item->quality += 1;
