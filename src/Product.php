@@ -12,4 +12,22 @@ class Product
     {
         $this->item = $item;
     }
+
+    public function decreaseSellIn($pts)
+    {
+        $pts = abs($pts);
+
+        $this->item->sell_in -= $pts;
+
+        return $this;
+    }
+
+    public function decreaseQuality($pts)
+    {
+        $pts = abs($pts);
+
+        $this->item->quality -= $pts;
+
+        return $this;
+    }
 }
