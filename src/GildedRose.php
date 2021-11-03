@@ -60,13 +60,8 @@ final class GildedRose
                     break;
             }
 
-            if ($item->quality > 50) {
-                $item->quality = 50;
-            }
-
-            if ($item->quality < 0) {
-                $item->quality = 0;
-            }
+            $item->quality = min($item->quality, 50);
+            $item->quality = max($item->quality, 0);
         }
     }
 }
