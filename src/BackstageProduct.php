@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace GildedRose;
 
-class AgedBrieProduct extends BaseProduct
+class BackstageProduct extends BaseProduct
 {
     public function decreaseQuality($pts): BaseProduct
     {
         return $this->increaseQuality($pts);
     }
 }
-

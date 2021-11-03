@@ -15,11 +15,6 @@ abstract class BaseProduct
 
     protected $item;
 
-    /**
-     * @var int Возраст продукта в количестве обновлений.
-     */
-    protected $old = 0;
-
     public function __construct(Item $item)
     {
         $this->item = $item;
@@ -29,7 +24,6 @@ abstract class BaseProduct
     {
         $this->decreaseQuality($interval);
         $this->decreaseSellIn($interval);
-        $this->old += $interval;
     }
 
     protected function setSellIn($sellIn): self
@@ -51,12 +45,17 @@ abstract class BaseProduct
         return $this;
     }
 
+    public function increaseQuality($pts): self
+    {
+        return $this->setQuality($this->item->quality + abs($pts));
+    }
+
     public function decreaseQuality($pts): self
     {
         if ($this->item->sell_in <= self::SELL_IN_TO_QTY) {
             $pts *= 2;
         }
 
-        return $this->setQuality($this->item->quality - $pts);
+        return $this->setQuality($this->item->quality - abs($pts));
     }
 }
