@@ -8,6 +8,8 @@ class Product
 {
     // Значение срока хранения после которого товар начинает терять качество быстрее
     const SELL_IN_TO_QTY = 0;
+    // Минимальное значение качества товара
+    const MIN_QUALITY = 0;
 
     private $item;
 
@@ -34,6 +36,7 @@ class Product
         }
 
         $this->item->quality -= $pts;
+        $this->item->quality = max($this->item->quality, self::MIN_QUALITY);
 
         return $this;
     }
