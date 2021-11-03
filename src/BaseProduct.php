@@ -10,6 +10,8 @@ abstract class BaseProduct
     const SELL_IN_TO_QTY = 0;
     /** @var int Минимальное значение качества товара */
     const MIN_QUALITY = 0;
+    /** @var int Максимальное значение качества товара */
+    const MAX_QUALITY = 50;
 
     protected $item;
 
@@ -43,7 +45,9 @@ abstract class BaseProduct
 
     protected function setQuality($quality): self
     {
-        $this->item->quality = $quality;
+        $this->item->quality = max($quality, self::MIN_QUALITY);
+        $this->item->quality = min($quality, self::MAX_QUALITY);
+
         return $this;
     }
 
@@ -53,6 +57,6 @@ abstract class BaseProduct
             $pts *= 2;
         }
 
-        return $this->setQuality(max($this->item->quality - $pts, self::MIN_QUALITY));
+        return $this->setQuality($this->item->quality - $pts);
     }
 }
