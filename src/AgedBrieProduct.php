@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GildedRose;
 
-class Product extends BaseProduct
+class AgedBrieProduct extends BaseProduct
 {
     /** @var int Значение срока хранения после которого товар начинает терять качество быстрее */
     const SELL_IN_TO_QTY = 0;
@@ -13,6 +13,8 @@ class Product extends BaseProduct
 
     public function decreaseQuality($pts): BaseProduct
     {
+        $pts *= $this->old;
+
         if ($this->item->sell_in <= self::SELL_IN_TO_QTY) {
             $pts *= 2;
         }

@@ -8,9 +8,21 @@ abstract class BaseProduct
 {
     protected $item;
 
+    /**
+     * @var int Возраст продукта в количестве обновлений.
+     */
+    protected $old = 0;
+
     public function __construct(Item $item)
     {
         $this->item = $item;
+    }
+
+    protected function update(int $interval = 1)
+    {
+        $this->decreaseQuality($interval);
+        $this->decreaseSellIn($interval);
+        $this->old += $interval;
     }
 
     protected function setSellIn($sellIn): self
