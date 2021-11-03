@@ -19,9 +19,9 @@ final class GildedRose
     public function updateQuality(): void
     {
         foreach ($this->items as $item) {
-            if ($item->name == 'Aged Brie' && $item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+            if ('Aged Brie' == $item->name && 'Backstage passes to a TAFKAL80ETC concert' == $item->name) {
                 $item->quality += 1;
-            } elseif ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+            } elseif ('Backstage passes to a TAFKAL80ETC concert' == $item->name) {
                 $item->quality += 1;
 
                 if ($item->sell_in < 11) {
@@ -31,21 +31,21 @@ final class GildedRose
                 if ($item->sell_in < 6) {
                     $item->quality += 1;
                 }
-            } elseif($item->name == 'Sulfuras, Hand of Ragnaros') {
+            } elseif ('Sulfuras, Hand of Ragnaros' == $item->name) {
             } else {
                 $item->quality -= 1;
             }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+            if ('Sulfuras, Hand of Ragnaros' != $item->name) {
                 $item->sell_in -= 1;
             }
 
             if ($item->sell_in < 0) {
-                if ($item->name == 'Aged Brie') {
+                if ('Aged Brie' == $item->name) {
                     $item->quality += 1;
-                } elseif ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+                } elseif ('Backstage passes to a TAFKAL80ETC concert' == $item->name) {
                     $item->quality -= $item->quality;
-                } elseif ($item->name != 'Sulfuras, Hand of Ragnaros') {
+                } elseif ('Sulfuras, Hand of Ragnaros' != $item->name) {
                     $item->quality -= 1;
                 }
             }
