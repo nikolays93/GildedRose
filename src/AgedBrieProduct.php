@@ -13,12 +13,6 @@ class AgedBrieProduct extends BaseProduct
 
     public function decreaseQuality($pts): BaseProduct
     {
-        $pts *= $this->old;
-
-        if ($this->item->sell_in <= self::SELL_IN_TO_QTY) {
-            $pts *= 2;
-        }
-
-        return $this->setQuality(max($this->item->quality - $pts, self::MIN_QUALITY));
+        return parent::decreaseQuality($pts * $this->old);
     }
 }

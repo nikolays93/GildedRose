@@ -6,6 +6,11 @@ namespace GildedRose;
 
 abstract class BaseProduct
 {
+    /** @var int Значение срока хранения после которого товар начинает терять качество быстрее */
+    const SELL_IN_TO_QTY = 0;
+    /** @var int Минимальное значение качества товара */
+    const MIN_QUALITY = 0;
+
     protected $item;
 
     /**
@@ -44,6 +49,10 @@ abstract class BaseProduct
 
     public function decreaseQuality($pts): self
     {
-        return $this->setQuality($this->item->quality - abs($pts));
+        if ($this->item->sell_in <= self::SELL_IN_TO_QTY) {
+            $pts *= 2;
+        }
+
+        return $this->setQuality(max($this->item->quality - $pts, self::MIN_QUALITY));
     }
 }
