@@ -8,6 +8,20 @@ class BackstageProduct extends BaseProduct
 {
     public function decreaseQuality($pts): BaseProduct
     {
-        return $this->increaseQuality($pts);
+        $this->increaseQuality($pts);
+
+        if ($this->item->sell_in < 10) {
+            $this->increaseQuality($pts);
+        }
+
+        if ($this->item->sell_in < 5) {
+            $this->increaseQuality($pts);
+        }
+
+        if ($this->item->sell_in < 0) {
+            $this->decreaseQuality($this->item->quality);
+        }
+
+        return $this;
     }
 }

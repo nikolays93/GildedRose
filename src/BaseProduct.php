@@ -22,8 +22,8 @@ abstract class BaseProduct
 
     protected function update(int $interval = 1)
     {
-        $this->decreaseQuality($interval);
         $this->decreaseSellIn($interval);
+        $this->decreaseQuality($interval);
     }
 
     protected function setSellIn($sellIn): self
@@ -52,7 +52,7 @@ abstract class BaseProduct
 
     public function decreaseQuality($pts): self
     {
-        if ($this->item->sell_in <= self::SELL_IN_TO_QTY) {
+        if ($this->item->sell_in < self::SELL_IN_TO_QTY) {
             $pts *= 2;
         }
 
