@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+    php:
+        build: ./docker/${PHP_VERSION}
+        container_name: ${DOCKER_NAME}_php
+        volumes:
+            - ./:/var/www
+            # - ./logs/php:/var/log/php:ro
+            # Use for debug config:
+            # - ./docker/php/conf.d:/etc/php/7.4/fpm/conf.d
+        environment:
+            PHP_IDE_CONFIG: "serverName=Docker"
+        ports:
+            - "9000:9000"
+            - "25:25"
