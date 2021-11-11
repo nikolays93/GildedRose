@@ -6,12 +6,12 @@ namespace GildedRose;
 
 class AgedBrieProduct extends BaseProduct
 {
-    public function decreaseQuality($pts): BaseProduct
+    public function decreaseQuality($pts = 1): BaseProduct
     {
         if ($this->item->sell_in < self::SELL_IN_TO_QTY) {
-            return $this->increaseQuality(2 * $pts);
+            $pts *= 2;
         }
 
-        return $this->increaseQuality($pts);
+        return parent::decreaseQuality($pts);
     }
 }

@@ -7,63 +7,59 @@ namespace GildedRose;
 final class GildedRose
 {
     /**
-     * @var Item[]
+     * @var BaseProduct[]
      */
     private $items;
 
-    public function __construct(array $items)
+    public function __construct(array $items = [])
     {
-        $this->items = $items;
+        $this->add($items);
+    }
+
+    public function add($product)
+    {
+        if (is_iterable($product)) {
+            array_walk($product, function ($obProduct) {
+                $this->add($obProduct);
+            });
+
+            return $this;
+        }
+
+        if ($product instanceof Item) {
+            $product = static::defineProduct($product);
+        }
+
+        if (!$product instanceof BaseProduct) {
+            throw new \Exception('Undefined product instance');
+        }
+
+        $this->items[] = $product;
+        return $this;
     }
 
     public function updateQuality(): void
     {
-        foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
-                    }
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                        if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
+        array_walk($this->items, static function ($item) {
+            $item->update();
+        });
+    }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
-            }
+    public static function defineProduct(Item $product)
+    {
+        switch ($product->name)
+        {
+            case 'Aged Brie':
+                return new AgedBrieProduct($product);
 
-            if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
-                        }
-                    } else {
-                        $item->quality = $item->quality - $item->quality;
-                    }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
-                    }
-                }
-            }
+            case 'Sulfuras, Hand of Ragnaros':
+                return new LegendaryProduct($product);
+
+            case 'Backstage passes to a TAFKAL80ETC concert':
+                return new BackstageProduct($product);
+
+            default:
+                return new Product($product);
         }
     }
 }

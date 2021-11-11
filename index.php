@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use GildedRose\GildedRose;
 use GildedRose\Item;
@@ -26,7 +26,7 @@ $app = new GildedRose($items);
 
 $days = 2;
 if (count($argv) > 1) {
-    $days = (int) $argv[1];
+    $days = (int)$argv[1];
 }
 
 for ($i = 0; $i < $days; $i++) {

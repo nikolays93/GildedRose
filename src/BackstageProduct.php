@@ -6,20 +6,20 @@ namespace GildedRose;
 
 class BackstageProduct extends BaseProduct
 {
-    public function decreaseQuality($pts): BaseProduct
+    public function decreaseQuality($pts = 1): BaseProduct
     {
-        $this->increaseQuality($pts);
+        $this->increaseQuality();
 
         if ($this->item->sell_in < 10) {
-            $this->increaseQuality($pts);
+            $this->increaseQuality();
         }
 
         if ($this->item->sell_in < 5) {
-            $this->increaseQuality($pts);
+            $this->increaseQuality();
         }
 
         if ($this->item->sell_in < 0) {
-            $this->decreaseQuality($this->item->quality);
+            parent::decreaseQuality($this->item->quality);
         }
 
         return $this;

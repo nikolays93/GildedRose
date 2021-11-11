@@ -20,10 +20,11 @@ abstract class BaseProduct
         $this->item = $item;
     }
 
-    protected function update(int $interval = 1)
+    public function update(): void
     {
-        $this->decreaseSellIn($interval);
-        $this->decreaseQuality($interval);
+        $this
+            ->decreaseSellIn()
+            ->decreaseQuality();
     }
 
     protected function setSellIn($sellIn): self
@@ -32,7 +33,7 @@ abstract class BaseProduct
         return $this;
     }
 
-    public function decreaseSellIn($pts): self
+    public function decreaseSellIn($pts = 1): self
     {
         return $this->setSellIn($this->item->sell_in - abs($pts));
     }
@@ -45,17 +46,13 @@ abstract class BaseProduct
         return $this;
     }
 
-    public function increaseQuality($pts): self
+    public function increaseQuality($pts = 1): self
     {
         return $this->setQuality($this->item->quality + abs($pts));
     }
 
-    public function decreaseQuality($pts): self
+    public function decreaseQuality($pts = 1): self
     {
-        if ($this->item->sell_in < self::SELL_IN_TO_QTY) {
-            $pts *= 2;
-        }
-
         return $this->setQuality($this->item->quality - abs($pts));
     }
 }
