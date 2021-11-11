@@ -25,8 +25,12 @@ $items = [
 $app = new GildedRose($items);
 
 $days = 2;
-if (count($argv) > 1) {
+if (isset($argv) && count($argv) > 1) {
     $days = (int) $argv[1];
+}
+
+if ('fpm-fcgi' === php_sapi_name()) {
+    echo '<pre>';
 }
 
 for ($i = 0; $i < $days; $i++) {
