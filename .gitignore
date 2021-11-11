@@ -1,6 +1,8 @@
-/.idea 
-/report.xml 
-/.phpstorm.meta.php 
+/report.xml
+/.phpstorm.meta.php
 /.phpunit.result.cache
 /build
 /vendor
+# Docker
+/.env
+/docker/data/
